@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cm.dao.UserDao">
+    <insert id="insertUser" parameterType="com.cm.model.User">
+        insert into user(username, password,phone,position) VALUE (#{username},#{password},#{phone},#{position})
+    </insert>
+
+    <update id="updateUser">
+
+    </update>
+
+    <delete id="deleteUserById">
+        delete from user where userid=#{userid}
+    </delete>
+
+    <select id="getAllUser" resultType="com.cm.model.User">
+        select * from user
+    </select>
+
+    <select id="login" resultType="com.cm.model.User">
+        select * from user where phone=#{phone} and password=#{password}
+    </select>
+
+    <select id="getUser" resultType="com.cm.model.User">
+
+    </select>
+
+    <select id="register" resultType="com.cm.model.User">
+        select * from user where phone=#{phone}
+    </select>
+
+</mapper>

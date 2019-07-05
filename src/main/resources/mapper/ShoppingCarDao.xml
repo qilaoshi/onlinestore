@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cm.dao.ShoppingCarDao">
+    <insert id="AddCar">
+        insert into shopping_car(userId,goodsId,shopNumber) values (#{userId},#{goodsId},#{shopNumber}) ON DUPLICATE KEY UPDATE shopNumber=shopNumber+#{shopNumber}
+    </insert>
+
+    <delete id="deleteCarGoods">
+        delete from shopping_car where shoppingCarId=#{shoppingCarId}
+    </delete>
+
+    <delete id="total">
+        delete from shopping_car where userId=#{userId}
+    </delete>
+
+    <select id="SelectUserCar" resultMap="GoodsWithShoppingCar">
+        select shopping_car.shoppingCarId,shopping_car.shopNumber,goods.goodsPrice,goods.goodsName from goods,shopping_car where goods.goodsId=shopping_car.goodsId and shopping_car.userId=#{userId}
+    </select>
+
+    <resultMap type="ShoppingCar" id="GoodsWithShoppingCar">
+        <result property="shopNumber" column="shopNumber"/>
+        <result property="goodsId" column="goodsId" />
+        <result property="shoppingCarId" column="shoppingCarId"/>
+        <result property="userId" column="userId"/>
+        <association property="goods" javaType="Goods">
+            <result property="goodsName" column="goodsName" />
+            <result property="goodsPrice" column="goodsPrice" />
+            <result property="userId" column="userId"/>
+            <result property="goodsCategory" column="goodsCategory"/>
+            <result property="goodsId" column="goodsId"/>
+            <result property="goodsContent" column="goodsContent"/>
+            <result property="goodsImagePath" column="goodsImagePath"/>
+            <result property="goodsNumber" column="goodsNumber"/>
+        </association>
+    </resultMap>
+</mapper>
